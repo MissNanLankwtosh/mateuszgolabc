@@ -13,4 +13,8 @@ public interface WorkflowSequence
     public void removeModule(Module module);
     
     public void executeModule();
+    
+    public void validateModuleInput();
+    
+    public void validateModuleOutput();
 }

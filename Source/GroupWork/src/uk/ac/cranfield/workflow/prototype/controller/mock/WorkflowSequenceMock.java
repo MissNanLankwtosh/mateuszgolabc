@@ -11,8 +11,11 @@ import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
 public class WorkflowSequenceMock extends Observable implements WorkflowSequence
 {
     
-    List<Module> modules;
-    ListIterator<Module> iterator;
+    private List<Module> modules;
+    private ListIterator<Module> iterator = modules.listIterator();
+    private Module currentModule;
+    private boolean outputState;
+    private boolean inputState;
     
     @Override
     public int getNumberOfModules()
@@ -34,11 +37,36 @@ public class WorkflowSequenceMock extends Observable implements WorkflowSequence
         
     }
     
+    
     @Override
     public void executeModule()
     {
-        // TODO Auto-generated method stub
         
+        if (!iterator.hasNext())
+        {
+            iterator = modules.listIterator(0);
+            currentModule = modules.get(0);
+        }
+        else
+        {
+            currentModule = iterator.next();
+        }
+        
+        currentModule.execute();
+    }
+    
+    @Override
+    public void validateModuleInput()
+    {
+        inputState = currentModule.validateInput();
+        notifyObservers();
+    }
+    
+    @Override
+    public void validateModuleOutput()
+    {
+        outputState = currentModule.validateOutput();
+        notifyObservers();
     }
     
     

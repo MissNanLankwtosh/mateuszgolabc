@@ -1,31 +1,33 @@
 package uk.ac.cranfield.workflow.prototype.model.mock;
 
+import uk.ac.cranfield.workflow.prototype.controller.interfaces.ModuleDataValidator;
+import uk.ac.cranfield.workflow.prototype.controller.mock.ModuleDataValidatorMock;
 import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
 
 
 public class ModuleMock implements Module
 {
     
-    boolean inputResult;
-    boolean outputResult;
+    private ModuleDataValidator inputValidator;
+    private ModuleDataValidator outputValidator;
     
     
-    public ModuleMock(boolean input, boolean output)
+    public ModuleMock()
     {
-        inputResult = input;
-        outputResult = output;
+        inputValidator = new ModuleDataValidatorMock();
+        outputValidator = new ModuleDataValidatorMock();
     }
     
     @Override
     public boolean validateInput()
     {
-        return inputResult;
+        return inputValidator.validate();
     }
     
     @Override
     public boolean validateOutput()
     {
-        return outputResult;
+        return outputValidator.validate();
     }
     
     @Override

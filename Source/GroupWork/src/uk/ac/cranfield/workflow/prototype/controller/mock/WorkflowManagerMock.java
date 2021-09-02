@@ -4,19 +4,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowManager;
-import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowSequence;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
 
 
 public class WorkflowManagerMock implements Observer, WorkflowManager
 {
     
-    WorkflowSequence sequence;
-    
-    public void setWorkflowSequence(WorkflowSequence sequence)
-    {
-        this.sequence = sequence;
-    }
+    // private ObservableValue v;
     
     @Override
     public void backup(StablePoint stablePoint)
@@ -35,9 +29,9 @@ public class WorkflowManagerMock implements Observer, WorkflowManager
     @Override
     public void update(Observable o, Object arg)
     {
-        
-        
+        if (o.equals(arg))
+        {
+            
+        }
     }
-    
-    
 }
