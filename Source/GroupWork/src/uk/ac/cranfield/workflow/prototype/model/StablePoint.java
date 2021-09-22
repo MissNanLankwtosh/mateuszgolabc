@@ -12,6 +12,7 @@ public class StablePoint
     private int postModuleID;
     private String pathToOutputFile;
     private String pathToInputFile;
+    private int iterationNumber;
     
     /*
      * Consturctor
@@ -20,13 +21,15 @@ public class StablePoint
      * inputPath = "c:\\..\\myProgram\\resources\\inputFile1";
      * StablePoint(0, 1, outputPath, inputPath);
      */
-    public StablePoint(int id, int pre, int post, String pathToOutput, String pathToInput)
+    public StablePoint(int id, int pre, int post, String pathToOutput, String pathToInput, 
+    																		int iterationNumber)
     {
         this.id = id;
         this.preModuleID = pre;
         this.postModuleID = post;
         this.pathToOutputFile = pathToOutput;
         this.pathToInputFile = pathToInput;
+        this.iterationNumber = iterationNumber;
     }
     
     public int getPreModuleID()
@@ -51,6 +54,12 @@ public class StablePoint
     {
         
         return pathToInputFile;
+    }
+    
+    public int getIterationNumber()
+    {
+    	
+    	return iterationNumber;
     }
     
     
