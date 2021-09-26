@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.DatabaseManager;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
@@ -12,7 +14,7 @@ import uk.ac.cranfield.workflow.prototype.model.StablePoint;
  * DatabaseManager class
  * It is using LinkedList for simulation.
  */
-public class DatabaseManagerMock implements DatabaseManager
+public class DatabaseManagerMock extends Observable implements DatabaseManager
 {
     
     private Connection c; // it is not necessary if we only simulating database
@@ -36,6 +38,11 @@ public class DatabaseManagerMock implements DatabaseManager
         this.pathToServer = pathToS; // it is not necessary if we only simulating database
         this.userName = userN; // it is not necessary if we only simulating database
         this.userPassword = userP; // it is not necessary if we only simulating database
+    }
+    
+    public DatabaseManagerMock(Observer observer)
+    {
+        addObserver(observer);
     }
     
     
@@ -71,44 +78,6 @@ public class DatabaseManagerMock implements DatabaseManager
         }
     }
     
-    // public void insertToDatabase(int preModuleID, int postModuleID, String link1, String link2) {
-    //
-    // if (c != null) {
-    // PreparedStatement stnt = null;
-    // ResultSet rs = null;
-    //
-    // try {
-    // stnt = c.prepareStatement(
-    // "INSERT INTO stablepoints VALUES (?,?,?,?)"
-    // );
-    //
-    // stnt.setInt(0, preModuleID);
-    // stnt.setInt(1, postModuleID);
-    // stnt.setString(2, link1);
-    // stnt.setString(3, link2);
-    //
-    // stnt.executeQuery();
-    // }
-    // catch (SQLException ex) {}
-    //
-    // finally
-    // {
-    // if (stnt != null)
-    // try
-    // {
-    // if (rs != null)
-    // try
-    // {
-    // rs.close();
-    // }
-    // catch (SQLException ex) {}
-    // stnt.close();
-    // }
-    // catch (SQLException ex) {}
-    // }
-    // }
-    // }
-    
     public void insert(StablePoint sp)
     {
         stablePoints.addLast(sp);
@@ -118,7 +87,6 @@ public class DatabaseManagerMock implements DatabaseManager
             stablePoints.removeFirst();
         }
     }
-    
     
     @Override
     public StablePoint getLastStablePoint()
@@ -133,7 +101,6 @@ public class DatabaseManagerMock implements DatabaseManager
         return stablePoints.size();
     }
     
-    
     @Override
     public void insertStablePoint(StablePoint stablePoint)
     {
@@ -147,7 +114,6 @@ public class DatabaseManagerMock implements DatabaseManager
         
     }
     
-    
     @Override
     public void removeStablePoint(StablePoint stablePoint)
     {
@@ -160,14 +126,12 @@ public class DatabaseManagerMock implements DatabaseManager
         stablePoints.remove(stablePoint);
     }
     
-    
     @Override
     public StablePoint getNextStablePoint()
     {
         // TODO : implement this method
         return currentBackup;
     }
-    
     
     @Override
     public void disconnect()

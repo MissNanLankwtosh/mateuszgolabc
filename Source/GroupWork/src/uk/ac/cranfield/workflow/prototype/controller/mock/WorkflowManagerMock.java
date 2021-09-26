@@ -1,16 +1,23 @@
 package uk.ac.cranfield.workflow.prototype.controller.mock;
 
 import java.util.Observable;
-import java.util.Observer;
 
+import uk.ac.cranfield.workflow.prototype.controller.interfaces.DatabaseManager;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowManager;
+import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowSequence;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
+import uk.ac.cranfield.workflow.prototype.view.WorkflowManagerView;
 
 
-public class WorkflowManagerMock implements Observer, WorkflowManager
+public class WorkflowManagerMock implements WorkflowManager
 {
     
-    // private ObservableValue v;
+    private WorkflowManagerView view;
+    
+    public WorkflowManagerMock()
+    {
+        view = new WorkflowManagerView();
+    }
     
     @Override
     public void backup(StablePoint stablePoint)
@@ -31,7 +38,14 @@ public class WorkflowManagerMock implements Observer, WorkflowManager
     {
         if (o.equals(arg))
         {
-            
+            if (o instanceof WorkflowSequence)
+            {
+                // view.
+            }
+            else if (o instanceof DatabaseManager)
+            {
+                
+            }
         }
     }
 }
