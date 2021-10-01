@@ -2,12 +2,12 @@ package uk.ac.cranfield.workflow.prototype.view;
 
 public class DatabaseManagerView {
 	
-	void printGettingLastStablePoint() {
+	public void printGettingLastStablePoint() {
 		
 		System.out.println("Getting last stable point...");
 	}
 	
-	void printGettingNextStablePoint() {
+	public void printGettingNextStablePoint() {
 		
 		System.out.println("Getting next stable point...");
 	}
