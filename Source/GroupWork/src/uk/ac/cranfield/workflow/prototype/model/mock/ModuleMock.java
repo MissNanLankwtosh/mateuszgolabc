@@ -10,6 +10,7 @@ public class ModuleMock implements Module
     
     private ModuleDataValidator inputValidator;
     private ModuleDataValidator outputValidator;
+    private Integer id;
     
     
     public ModuleMock()
@@ -35,5 +36,11 @@ public class ModuleMock implements Module
     {
         return true;
     }
+    
+    public Integer getID()
+    {
+        return id;
+    }
+    
     
 }

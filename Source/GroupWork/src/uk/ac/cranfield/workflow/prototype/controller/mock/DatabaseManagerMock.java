@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.Observable;
-import java.util.Observer;
 
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.DatabaseManager;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
@@ -14,7 +12,7 @@ import uk.ac.cranfield.workflow.prototype.model.StablePoint;
  * DatabaseManager class
  * It is using LinkedList for simulation.
  */
-public class DatabaseManagerMock extends Observable implements DatabaseManager
+public class DatabaseManagerMock implements DatabaseManager
 {
     
     private Connection c; // it is not necessary if we only simulating database
@@ -22,6 +20,11 @@ public class DatabaseManagerMock extends Observable implements DatabaseManager
     private int numberOfLastBackups;
     private StablePoint currentBackup;
     private LinkedList<StablePoint> stablePoints = new LinkedList<StablePoint>();
+    
+    public DatabaseManagerMock()
+    {
+        
+    }
     
     /*
      * Constructor
@@ -38,11 +41,6 @@ public class DatabaseManagerMock extends Observable implements DatabaseManager
         this.pathToServer = pathToS; // it is not necessary if we only simulating database
         this.userName = userN; // it is not necessary if we only simulating database
         this.userPassword = userP; // it is not necessary if we only simulating database
-    }
-    
-    public DatabaseManagerMock(Observer observer)
-    {
-        addObserver(observer);
     }
     
     

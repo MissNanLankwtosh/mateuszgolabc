@@ -9,4 +9,6 @@ public interface Module
     public boolean validateOutput();
     
     public boolean execute();
+    
+    public Integer getID();
 }

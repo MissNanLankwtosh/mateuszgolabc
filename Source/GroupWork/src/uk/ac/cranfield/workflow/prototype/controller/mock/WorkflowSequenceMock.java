@@ -6,7 +6,10 @@ import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
 
+import uk.ac.cranfield.workflow.prototype.controller.WorkflowSequenceState;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowSequence;
+import uk.ac.cranfield.workflow.prototype.model.Simulation;
+import uk.ac.cranfield.workflow.prototype.model.StablePoint;
 import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
 
 
@@ -18,12 +21,15 @@ public class WorkflowSequenceMock extends Observable implements WorkflowSequence
     private Module currentModule;
     private boolean outputState;
     private boolean inputState;
+    private WorkflowSequenceState state;
+    private Integer iterationNumber;
     
     public WorkflowSequenceMock(Observer observer)
     {
         addObserver(observer);
         modules = new ArrayList<Module>();
         iterator = modules.listIterator();
+        iterationNumber = 0;
     }
     
     @Override
@@ -97,4 +103,32 @@ public class WorkflowSequenceMock extends Observable implements WorkflowSequence
     }
     
     
+    /**
+     * @return the state
+     */
+    public final WorkflowSequenceState getState()
+    {
+        return state;
+    }
+    
+    @Override
+    public void setStartingParameters(Simulation simulation)
+    {
+        
+        
+    }
+    
+    @Override
+    public StablePoint createStablePoint()
+    {
+        int prev = -1;
+        int next = -1;
+        
+        if (iterator.hasPrevious())
+            prev = iterator.previous().getID();
+        if (iterator.hasNext())
+            next = iterator.next().getID();
+        
+        return new StablePoint(prev, next, iterationNumber);
+    }
 }

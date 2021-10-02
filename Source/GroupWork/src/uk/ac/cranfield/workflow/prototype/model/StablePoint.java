@@ -1,5 +1,7 @@
 package uk.ac.cranfield.workflow.prototype.model;
 
+import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
+
 /*
  * StablePoint class
  * It is a simple class: constructor + getters
@@ -10,8 +12,8 @@ public class StablePoint
     private int id;
     private int preModuleID;
     private int postModuleID;
-    private String pathToOutputFile;
-    private String pathToInputFile;
+    private Module prevModule;
+    private Module nextModule;
     private int iterationNumber;
     
     /*
@@ -21,15 +23,19 @@ public class StablePoint
      * inputPath = "c:\\..\\myProgram\\resources\\inputFile1";
      * StablePoint(0, 1, outputPath, inputPath);
      */
-    public StablePoint(int id, int pre, int post, String pathToOutput, String pathToInput, 
-    																		int iterationNumber)
+    public StablePoint(int pre, int post, int iterationNumber)
     {
-        this.id = id;
+        
         this.preModuleID = pre;
         this.postModuleID = post;
-        this.pathToOutputFile = pathToOutput;
-        this.pathToInputFile = pathToInput;
+        // this.prevModule = prev;
+        // this.nextModule = next;
         this.iterationNumber = iterationNumber;
+    }
+    
+    public void setId(int id)
+    {
+        this.id = id;
     }
     
     public int getPreModuleID()
@@ -44,22 +50,22 @@ public class StablePoint
         return postModuleID;
     }
     
-    public String getPathToOutputFile()
+    public Module getPathToOutputFile()
     {
         
-        return pathToOutputFile;
+        return prevModule;
     }
     
-    public String getPathToInputFile()
+    public Module getPathToInputFile()
     {
         
-        return pathToInputFile;
+        return nextModule;
     }
     
     public int getIterationNumber()
     {
-    	
-    	return iterationNumber;
+        
+        return iterationNumber;
     }
     
     
