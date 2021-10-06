@@ -60,4 +60,9 @@ public class WorkflowManagerView
         
         System.out.println("Simulation recovered.");
     }
+	
+	public void printoutWorkflowQueueEmpty() {
+		
+		System.out.println("Simulation process failure! Reason: WorkflowQueue is EMPTY.");
+	}
 }
