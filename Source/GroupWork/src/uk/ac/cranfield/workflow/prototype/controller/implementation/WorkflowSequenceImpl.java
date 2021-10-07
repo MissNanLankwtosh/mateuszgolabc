@@ -1,4 +1,4 @@
-package uk.ac.cranfield.workflow.prototype.controller.mock;
+package uk.ac.cranfield.workflow.prototype.controller.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import uk.ac.cranfield.workflow.prototype.model.StablePoint;
 import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
 
 
-public class WorkflowSequenceMock extends Observable implements WorkflowSequence
+public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
 {
     
     private List<Module> modules;
@@ -24,7 +24,7 @@ public class WorkflowSequenceMock extends Observable implements WorkflowSequence
     private WorkflowSequenceState state;
     private Integer iterationNumber;
     
-    public WorkflowSequenceMock(Observer observer)
+    public WorkflowSequenceImpl(Observer observer)
     {
         addObserver(observer);
         modules = new ArrayList<Module>();
@@ -56,6 +56,7 @@ public class WorkflowSequenceMock extends Observable implements WorkflowSequence
     @Override
     public void executeModule()
     {
+        // TODO : correct choosing current element
         
         if (!iterator.hasNext())
         {
@@ -114,7 +115,7 @@ public class WorkflowSequenceMock extends Observable implements WorkflowSequence
     @Override
     public void setStartingParameters(Simulation simulation)
     {
-        
+        // TODO : implement
         
     }
     

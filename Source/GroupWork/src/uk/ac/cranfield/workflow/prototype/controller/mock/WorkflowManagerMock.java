@@ -2,6 +2,7 @@ package uk.ac.cranfield.workflow.prototype.controller.mock;
 
 import java.util.Observable;
 
+import uk.ac.cranfield.workflow.prototype.controller.implementation.WorkflowSequenceImpl;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.DatabaseManager;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowManager;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowQueue;
@@ -30,9 +31,9 @@ public class WorkflowManagerMock implements WorkflowManager
     {
         if (o.equals(arg))
         {
-            if (o instanceof WorkflowSequence)
+            if (o instanceof WorkflowSequenceImpl)
             {
-                WorkflowSequenceMock sequence = (WorkflowSequenceMock) o;
+                WorkflowSequenceImpl sequence = (WorkflowSequenceImpl) o;
                 switch (sequence.getState()) {
                     case MODULE_INPUT_VALIDATION:
                         break;
@@ -41,15 +42,7 @@ public class WorkflowManagerMock implements WorkflowManager
                     case ERROR:
                         break;
                     case START_NEW_SIMULATION:
-                        if (!queue.isEmpty())
-                        {
-                            database.insertStablePoint(sequence.createStablePoint());
-                            sequence.setStartingParameters(queue.pop());
-                        }
-                        else
-                        {
-                            // view.emptyQuwe
-                        }
+                        startSimulation(sequence);
                         break;
                     case SIMULATION_RECOVERY_RESTART:
                         break;
@@ -64,9 +57,17 @@ public class WorkflowManagerMock implements WorkflowManager
     }
     
     @Override
-    public void startSimulation()
+    public void startSimulation(WorkflowSequence sequence)
     {
-        
+        if (!queue.isEmpty())
+        {
+            database.insertStablePoint(sequence.createStablePoint());
+            sequence.setStartingParameters(queue.pop());
+        }
+        else
+        {
+            // view.emptyQuwe
+        }
         
     }
     

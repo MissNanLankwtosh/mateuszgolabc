@@ -12,7 +12,7 @@ public interface WorkflowManager extends Observer
     
     // public StablePoint recover();
     
-    public void startSimulation();
+    public void startSimulation(WorkflowSequence sequence);
     
     public void stopSimulation();
     
