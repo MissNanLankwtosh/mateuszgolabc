@@ -132,4 +132,11 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
         
         return new StablePoint(prev, next, iterationNumber);
     }
+    
+    @Override
+    public void nextModule()
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }

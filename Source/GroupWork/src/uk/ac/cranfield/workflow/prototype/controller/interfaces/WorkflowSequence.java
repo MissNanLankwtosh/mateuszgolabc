@@ -16,6 +16,8 @@ public interface WorkflowSequence
     
     public void executeModule();
     
+    public void nextModule();
+    
     public void validateModuleInput();
     
     public void validateModuleOutput();
