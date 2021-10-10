@@ -48,27 +48,21 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     @Override
     public void removeModule(Module module)
     {
+        if (currentModule.equals(module)) {
+        		if (! iterator.hasNext())  {
+        				iterator = modules.listIterator(0);
+        				currentModule = modules.get(0);
+        		} else {
+        				currentModule = iterator.next();
+        		}
+        }
         modules.remove(module);
-        
     }
     
-    
-    @Override
-    public void executeModule()
-    {
-        // TODO : correct choosing current element
-        
-        if (!iterator.hasNext())
-        {
-            iterator = modules.listIterator(0);
-            currentModule = modules.get(0);
-        }
-        else
-        {
-            currentModule = iterator.next();
-        }
-        
-        currentModule.execute();
+    @Override 
+    public void executeModule() {
+    	
+    	currentModule.execute();
     }
     
     @Override
@@ -136,7 +130,12 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     @Override
     public void nextModule()
     {
-        // TODO Auto-generated method stub
+    	if (! iterator.hasNext())  {
+       	 	iterator = modules.listIterator(0);
+            currentModule = modules.get(0);
+    	} else {
+    		currentModule = iterator.next();
+    	}
         
     }
 }
