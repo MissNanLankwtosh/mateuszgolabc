@@ -2,6 +2,11 @@ package uk.ac.cranfield.workflow.prototype.view;
 
 public class WorkflowSequenceView {
 
+	public void printSimulationStarted() {
+		
+		System.out.println("Simulation started.");	
+	}
+	
 	public void printRecoveryStarted() {
 		
 		System.out.println("Recovery started.");
