@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.DatabaseManager;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
+import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
 
 /*
  * DatabaseManager class
@@ -18,12 +20,15 @@ public class DatabaseManagerMock implements DatabaseManager
     private Connection c; // it is not necessary if we only simulating database
     private String pathToServer, userName, userPassword;
     private int numberOfLastBackups;
-    private StablePoint currentBackup;
-    private LinkedList<StablePoint> stablePoints = new LinkedList<StablePoint>();
+    private LinkedList<StablePoint> stablePoints;
+    private ListIterator<StablePoint> iterator;
+    private StablePoint currentStablePoint;
+    
     
     public DatabaseManagerMock()
     {
-        
+    	stablePoints = new LinkedList<StablePoint>();
+    	iterator = stablePoints.listIterator();
     }
     
     /*
@@ -36,8 +41,8 @@ public class DatabaseManagerMock implements DatabaseManager
      */
     public DatabaseManagerMock(String pathToS, String userN, String userP)
     {
-        
         stablePoints = new LinkedList<StablePoint>();
+        iterator = stablePoints.listIterator();
         this.pathToServer = pathToS; // it is not necessary if we only simulating database
         this.userName = userN; // it is not necessary if we only simulating database
         this.userPassword = userP; // it is not necessary if we only simulating database
@@ -104,31 +109,51 @@ public class DatabaseManagerMock implements DatabaseManager
     {
         if (stablePoints.size() == numberOfLastBackups)
         {
+        	currentStablePoint = iterator.next();
             stablePoints.removeFirst();
         }
         
-        stablePoints.addLast(stablePoint);
-        currentBackup = stablePoint;
-        
+        if (stablePoints.isEmpty()) 
+        { 
+        	stablePoints.addLast(stablePoint);
+        	currentStablePoint = stablePoints.get(0); 
+        } else { 
+        	stablePoints.addLast(stablePoint);
+        }
     }
     
     @Override
     public void removeStablePoint(StablePoint stablePoint)
     {
-        if (currentBackup.equals(stablePoint))
+    	if (currentStablePoint.equals(stablePoint)) {
+    		if (! iterator.hasNext())  { 
+    				iterator = stablePoints.listIterator(0);
+    				currentStablePoint = stablePoints.get(0);
+    		} else {
+    				currentStablePoint = iterator.next();
+    		}
+    	}
+    	stablePoints.remove(stablePoint);
+        /*
+    	if (currentBackup.equals(stablePoint))
         {
             stablePoints.remove(stablePoint);
             currentBackup = stablePoints.peekLast();
         }
         
         stablePoints.remove(stablePoint);
+    	*/
     }
     
     @Override
-    public StablePoint getNextStablePoint()
+    public StablePoint getPreviousStablePoint()
     {
-        // TODO : implement this method
-        return currentBackup;
+    	if (! iterator.hasPrevious())  { 
+    		currentStablePoint = null;
+    	} else {
+    		currentStablePoint = iterator.previous();
+    	}
+        return currentStablePoint;
     }
     
     @Override

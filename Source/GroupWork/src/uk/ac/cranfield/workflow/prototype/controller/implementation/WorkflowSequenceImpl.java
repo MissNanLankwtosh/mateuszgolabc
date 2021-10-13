@@ -29,7 +29,7 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
         addObserver(observer);
         modules = new ArrayList<Module>();
         iterator = modules.listIterator();
-        iterationNumber = 0;
+        iterationNumber = 0;   
     }
     
     @Override
@@ -41,15 +41,21 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     @Override
     public void addModule(Module module)
     {
-        modules.add(module);
         
+        if (modules.isEmpty()) 
+        { 
+        	modules.add(module);
+        	currentModule = modules.get(0); 
+        } else { 
+        	modules.add(module);
+        }
     }
     
     @Override
     public void removeModule(Module module)
     {
         if (currentModule.equals(module)) {
-        		if (! iterator.hasNext())  {
+        		if (! iterator.hasNext())  { 
         				iterator = modules.listIterator(0);
         				currentModule = modules.get(0);
         		} else {
