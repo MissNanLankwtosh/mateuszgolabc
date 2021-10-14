@@ -28,4 +28,31 @@ public class Simulation
         
         return scientistID;
     }
+    
+    
+    /**
+     * @return the iD
+     */
+    public final Integer getID()
+    {
+        return ID;
+    }
+    
+    
+    /**
+     * @return the parameterFiles
+     */
+    public final List<String> getParameterFiles()
+    {
+        return parameterFiles;
+    }
+    
+    
+    /**
+     * @return the xmlName
+     */
+    public final String getXmlName()
+    {
+        return xmlName;
+    }
 }

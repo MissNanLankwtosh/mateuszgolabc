@@ -29,7 +29,7 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
         addObserver(observer);
         modules = new ArrayList<Module>();
         iterator = modules.listIterator();
-        iterationNumber = 0;   
+        iterationNumber = 0;
     }
     
     @Override
@@ -42,33 +42,40 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     public void addModule(Module module)
     {
         
-        if (modules.isEmpty()) 
-        { 
-        	modules.add(module);
-        	currentModule = modules.get(0); 
-        } else { 
-        	modules.add(module);
+        if (modules.isEmpty())
+        {
+            modules.add(module);
+            currentModule = modules.get(0);
+        }
+        else
+        {
+            modules.add(module);
         }
     }
     
     @Override
     public void removeModule(Module module)
     {
-        if (currentModule.equals(module)) {
-        		if (! iterator.hasNext())  { 
-        				iterator = modules.listIterator(0);
-        				currentModule = modules.get(0);
-        		} else {
-        				currentModule = iterator.next();
-        		}
+        if (currentModule.equals(module))
+        {
+            if (!iterator.hasNext())
+            {
+                iterator = modules.listIterator(0);
+                currentModule = modules.get(0);
+            }
+            else
+            {
+                currentModule = iterator.next();
+            }
         }
         modules.remove(module);
     }
     
-    @Override 
-    public void executeModule() {
-    	
-    	currentModule.execute();
+    @Override
+    public void executeModule()
+    {
+        
+        currentModule.execute();
     }
     
     @Override
@@ -130,18 +137,21 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
         if (iterator.hasNext())
             next = iterator.next().getID();
         
-        return new StablePoint(prev, next, iterationNumber);
+        return new StablePoint(prev, next, "previousOutputFilePath", "nextInputFilePath", iterationNumber);
     }
     
     @Override
     public void nextModule()
     {
-    	if (! iterator.hasNext())  {
-       	 	iterator = modules.listIterator(0);
+        if (!iterator.hasNext())
+        {
+            iterator = modules.listIterator(0);
             currentModule = modules.get(0);
-    	} else {
-    		currentModule = iterator.next();
-    	}
+        }
+        else
+        {
+            currentModule = iterator.next();
+        }
         
     }
 }

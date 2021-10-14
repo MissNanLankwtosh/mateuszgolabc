@@ -66,7 +66,7 @@ public class WorkflowManagerMock implements WorkflowManager
         }
         else
         {
-            // view.emptyQuwe
+            view.printoutWorkflowQueueEmpty();
         }
         
     }
