@@ -5,26 +5,32 @@ import uk.ac.cranfield.workflow.prototype.model.interfaces.ModuleParameter;
 
 public class ModuleParameterMock implements ModuleParameter
 {
+	private long estimatedExecutionTime;
+	private String executionCommand;
+	private Integer requiredNumberOfProcessors;
     
+	public ModuleParameterMock(long estimatedTime, String executionC, Integer requiredN) {
+		this.estimatedExecutionTime = estimatedTime;
+		this.executionCommand = executionC;
+		this.requiredNumberOfProcessors = requiredN;
+	}
+	
     @Override
     public Long getEstimatedExecutionTime()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return estimatedExecutionTime;
     }
     
     @Override
     public String getExecutionCommand()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return executionCommand;
     }
     
     @Override
     public Integer getRequiredNumberOfProcessors()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return requiredNumberOfProcessors;
     }
     
 }
