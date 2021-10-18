@@ -11,6 +11,7 @@ import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowSequence
 import uk.ac.cranfield.workflow.prototype.model.Simulation;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
 import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
+import uk.ac.cranfield.workflow.prototype.view.WorkflowSequenceView;
 
 
 public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
@@ -23,13 +24,15 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     private boolean inputState;
     private WorkflowSequenceState state;
     private Integer iterationNumber;
+    private WorkflowSequenceView view;
     
-    public WorkflowSequenceImpl(Observer observer)
+    public WorkflowSequenceImpl(Observer observer, WorkflowSequenceView view)
     {
         addObserver(observer);
         modules = new ArrayList<Module>();
         iterator = modules.listIterator();
         iterationNumber = 0;
+        this.view = view;
     }
     
     @Override
@@ -41,7 +44,6 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     @Override
     public void addModule(Module module)
     {
-        
         if (modules.isEmpty())
         {
             modules.add(module);
@@ -96,7 +98,8 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     /**
      * @return the outputState
      */
-    public final boolean isOutputStateCorrect()
+    @Override
+    public final Boolean isOutputStateCorrect()
     {
         return outputState;
     }
@@ -105,7 +108,8 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     /**
      * @return the inputState
      */
-    public final boolean isInputStateCorrect()
+    @Override
+    public final Boolean isInputStateCorrect()
     {
         return inputState;
     }
@@ -114,16 +118,16 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     /**
      * @return the state
      */
+    @Override
     public final WorkflowSequenceState getState()
     {
         return state;
     }
     
     @Override
-    public void setStartingParameters(Simulation simulation)
+    public void startSimulation(Simulation simulation)
     {
-        // TODO : implement
-        
+        view.printSimulationStarted();
     }
     
     @Override
@@ -153,5 +157,25 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
             currentModule = iterator.next();
         }
         
+    }
+    
+    
+    @Override
+    public void recoverFromStablePoint(StablePoint stablePoint)
+    {
+        for (Module m : modules)
+        {
+            if (stablePoint.getId().equals(m.getID()))
+            {
+                m.execute();
+                return;
+            }
+        }
+    }
+    
+    @Override
+    public Module getCurrentModule()
+    {
+        return currentModule;
     }
 }

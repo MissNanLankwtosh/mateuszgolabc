@@ -8,7 +8,6 @@ import java.util.ListIterator;
 
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.DatabaseManager;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
-import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
 
 /*
  * DatabaseManager class
@@ -27,8 +26,8 @@ public class DatabaseManagerMock implements DatabaseManager
     
     public DatabaseManagerMock()
     {
-    	stablePoints = new LinkedList<StablePoint>();
-    	iterator = stablePoints.listIterator();
+        stablePoints = new LinkedList<StablePoint>();
+        iterator = stablePoints.listIterator();
     }
     
     /*
@@ -109,55 +108,77 @@ public class DatabaseManagerMock implements DatabaseManager
     {
         if (stablePoints.size() == numberOfLastBackups)
         {
-        	currentStablePoint = iterator.next();
+            currentStablePoint = iterator.next();
             stablePoints.removeFirst();
         }
         
-        if (stablePoints.isEmpty()) 
-        { 
-        	stablePoints.addLast(stablePoint);
-        	currentStablePoint = stablePoints.get(0); 
-        } else { 
-        	stablePoints.addLast(stablePoint);
+        if (stablePoints.isEmpty())
+        {
+            stablePoints.addLast(stablePoint);
+            currentStablePoint = stablePoints.get(0);
+        }
+        else
+        {
+            stablePoints.addLast(stablePoint);
         }
     }
     
     @Override
     public void removeStablePoint(StablePoint stablePoint)
     {
-    	if (currentStablePoint.equals(stablePoint)) {
-    		if (! iterator.hasNext())  { 
-    				iterator = stablePoints.listIterator(0);
-    				currentStablePoint = stablePoints.get(0);
-    		} else {
-    				currentStablePoint = iterator.next();
-    		}
-    	}
-    	stablePoints.remove(stablePoint);
-        /*
-    	if (currentBackup.equals(stablePoint))
+        if (currentStablePoint.equals(stablePoint))
         {
-            stablePoints.remove(stablePoint);
-            currentBackup = stablePoints.peekLast();
+            if (!iterator.hasNext())
+            {
+                iterator = stablePoints.listIterator(0);
+                currentStablePoint = stablePoints.get(0);
+            }
+            else
+            {
+                currentStablePoint = iterator.next();
+            }
         }
-        
         stablePoints.remove(stablePoint);
-    	*/
+        /*
+         * if (currentBackup.equals(stablePoint))
+         * {
+         * stablePoints.remove(stablePoint);
+         * currentBackup = stablePoints.peekLast();
+         * }
+         * stablePoints.remove(stablePoint);
+         */
     }
     
     @Override
     public StablePoint getPreviousStablePoint()
     {
-    	if (! iterator.hasPrevious())  { 
-    		currentStablePoint = null;
-    	} else {
-    		currentStablePoint = iterator.previous();
-    	}
+        if (!iterator.hasPrevious())
+        {
+            currentStablePoint = null;
+        }
+        else
+        {
+            currentStablePoint = iterator.previous();
+        }
         return currentStablePoint;
     }
     
     @Override
     public void disconnect()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public StablePoint getInitialBackup()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    @Override
+    public void setInitialBackup()
     {
         // TODO Auto-generated method stub
         

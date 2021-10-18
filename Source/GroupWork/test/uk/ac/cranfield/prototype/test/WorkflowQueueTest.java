@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import uk.ac.cranfield.workflow.prototype.controller.implementation.WorkflowQueueImpl;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowQueue;
-import uk.ac.cranfield.workflow.prototype.controller.mock.WorkflowQueueMock;
 import uk.ac.cranfield.workflow.prototype.model.Simulation;
 
 
@@ -18,7 +18,7 @@ public class WorkflowQueueTest
         Simulation s = new Simulation(1, null, null);
         Simulation s2 = new Simulation(2, null, null);
         
-        WorkflowQueue queue = new WorkflowQueueMock();
+        WorkflowQueue queue = new WorkflowQueueImpl();
         queue.push(s);
         queue.push(s2);
         

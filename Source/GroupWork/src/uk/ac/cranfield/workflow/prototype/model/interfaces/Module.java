@@ -1,5 +1,7 @@
 package uk.ac.cranfield.workflow.prototype.model.interfaces;
 
+import uk.ac.cranfield.workflow.prototype.model.Simulation;
+
 
 public interface Module
 {
@@ -11,4 +13,6 @@ public interface Module
     public boolean execute();
     
     public Integer getID();
+    
+    public void setParameters(Simulation simulation);
 }

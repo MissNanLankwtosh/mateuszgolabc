@@ -19,4 +19,8 @@ public interface DatabaseManager
     public Integer getNumberOfLastBackups();
     
     public StablePoint getPreviousStablePoint();
+    
+    public StablePoint getInitialBackup();
+    
+    public void setInitialBackup();
 }

@@ -1,4 +1,4 @@
-package uk.ac.cranfield.workflow.prototype.controller.mock;
+package uk.ac.cranfield.workflow.prototype.controller.implementation;
 
 import java.util.LinkedList;
 
@@ -6,12 +6,12 @@ import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowQueue;
 import uk.ac.cranfield.workflow.prototype.model.Simulation;
 
 
-public class WorkflowQueueMock implements WorkflowQueue
+public class WorkflowQueueImpl implements WorkflowQueue
 {
     
     private LinkedList<Simulation> queue;
     
-    public WorkflowQueueMock()
+    public WorkflowQueueImpl()
     {
         queue = new LinkedList<Simulation>();
     }

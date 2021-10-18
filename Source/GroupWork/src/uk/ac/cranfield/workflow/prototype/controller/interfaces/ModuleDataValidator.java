@@ -4,5 +4,5 @@ package uk.ac.cranfield.workflow.prototype.controller.interfaces;
 public interface ModuleDataValidator
 {
     
-    public boolean validate();
+    public boolean validate(String xmlPath);
 }

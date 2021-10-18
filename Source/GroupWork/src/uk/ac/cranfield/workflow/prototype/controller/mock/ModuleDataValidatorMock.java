@@ -7,9 +7,11 @@ public class ModuleDataValidatorMock implements ModuleDataValidator
 {
     
     @Override
-    public boolean validate()
+    public boolean validate(String xmlPath)
     {
-        // TODO Auto-generated method stub
+        if ("correct".compareToIgnoreCase(xmlPath) == 0)
+            return true;
+        
         return false;
     }
     

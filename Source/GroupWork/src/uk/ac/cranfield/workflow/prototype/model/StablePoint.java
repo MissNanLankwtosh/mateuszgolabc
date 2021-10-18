@@ -8,7 +8,7 @@ package uk.ac.cranfield.workflow.prototype.model;
 public class StablePoint
 {
     
-    private int id;
+    private Integer id;
     private int preModuleID;
     private int postModuleID;
     private String prevModuleOutputPath;
@@ -58,7 +58,7 @@ public class StablePoint
     /**
      * @return the id
      */
-    public final int getId()
+    public final Integer getId()
     {
         return id;
     }
