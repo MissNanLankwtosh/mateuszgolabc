@@ -15,8 +15,8 @@ public class WorkflowQueueTest
     @Test
     public void queueTest()
     {
-        Simulation s = new Simulation(1, null, null);
-        Simulation s2 = new Simulation(2, null, null);
+        Simulation s = new Simulation(1, null, null, 1);
+        Simulation s2 = new Simulation(2, null, null, 1);
         
         WorkflowQueue queue = new WorkflowQueueImpl();
         queue.push(s);
