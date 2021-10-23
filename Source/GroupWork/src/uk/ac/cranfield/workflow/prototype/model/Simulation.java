@@ -10,12 +10,14 @@ public class Simulation
     private Integer scientistID;
     private List<String> parameterFiles;
     private String xmlName;
+    private Integer numberOfIterations;
     
-    public Simulation(Integer scientistID, List<String> parameterFiles, String xmlName)
+    public Simulation(Integer scientistID, List<String> parameterFiles, String xmlName, Integer numberOfIterations)
     {
         this.scientistID = scientistID;
         this.parameterFiles = parameterFiles;
         this.xmlName = xmlName;
+        this.numberOfIterations = numberOfIterations;
     }
     
     public void addParameter(String parameterFile)
@@ -54,5 +56,10 @@ public class Simulation
     public final String getXmlName()
     {
         return xmlName;
+    }
+    
+    public Integer getNumberOfIterations()
+    {
+        return numberOfIterations;
     }
 }

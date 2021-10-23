@@ -22,7 +22,7 @@ public class Main
     
     public static void success()
     {
-        Simulation simulation = new Simulation(1, Arrays.asList(parameterFiles), "simulation.xml");
+        Simulation simulation = new Simulation(1, Arrays.asList(parameterFiles), "simulation.xml", 5);
         
         WorkflowQueue queue = new WorkflowQueueImpl();
         queue.push(simulation);

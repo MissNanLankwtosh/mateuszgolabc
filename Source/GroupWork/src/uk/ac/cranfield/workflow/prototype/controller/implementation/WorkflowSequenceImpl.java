@@ -128,6 +128,12 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     public void startSimulation(Simulation simulation)
     {
         view.printSimulationStarted();
+        
+        for (int i = 0; i < simulation.getNumberOfIterations(); i++)
+        {
+            // view.printIteration }
+            // for()
+        }
     }
     
     @Override
@@ -158,7 +164,6 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
         }
         
     }
-    
     
     @Override
     public void recoverFromStablePoint(StablePoint stablePoint)
