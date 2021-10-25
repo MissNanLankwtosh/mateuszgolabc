@@ -11,7 +11,6 @@ import uk.ac.cranfield.workflow.prototype.model.Simulation;
 
 public class WorkflowQueueTest
 {
-    
     @Test
     public void queueTest()
     {
@@ -27,5 +26,4 @@ public class WorkflowQueueTest
         assertEquals(queue.pop().getScientistID(), 2);
         assertEquals(queue.isEmpty(), true);
     }
-    
 }
