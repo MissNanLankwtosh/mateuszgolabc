@@ -17,11 +17,7 @@ public interface WorkflowSequence
     
     public void executeModule();
     
-    public void nextModule();
-    
-    public void validateModuleInput();
-    
-    public void validateModuleOutput();
+    public Module nextModule();
     
     public void startSimulation(Simulation simulation);
     
@@ -36,4 +32,9 @@ public interface WorkflowSequence
     public void recoverFromStablePoint(StablePoint stablePoint);
     
     public Module getCurrentModule();
+    
+    public void validateModuleOutput();
+    
+    public void validateModuleInput();
+    
 }

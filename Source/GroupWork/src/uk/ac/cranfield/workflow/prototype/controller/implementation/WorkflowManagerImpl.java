@@ -44,6 +44,7 @@ public class WorkflowManagerImpl implements WorkflowManager
                     if (sequence.isInputStateCorrect())
                     {
                         view.printInputValidated();
+                        sequence.executeModule();
                     }
                     else
                     {

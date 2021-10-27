@@ -25,6 +25,7 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     private WorkflowSequenceState state;
     private Integer iterationNumber;
     private WorkflowSequenceView view;
+    private Integer iteration;
     
     public WorkflowSequenceImpl(Observer observer, WorkflowSequenceView view)
     {
@@ -32,6 +33,7 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
         modules = new ArrayList<Module>();
         iterator = modules.listIterator();
         iterationNumber = 0;
+        iteration = 1;
         this.view = view;
     }
     
@@ -56,7 +58,7 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     }
     
     @Override
-    public void removeModule(Module module)
+    public synchronized void removeModule(Module module)
     {
         if (currentModule.equals(module))
         {
@@ -67,7 +69,7 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
             }
             else
             {
-                currentModule = iterator.next();
+                currentModule = modules.get(iterator.nextIndex());
             }
         }
         modules.remove(module);
@@ -76,21 +78,31 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     @Override
     public void executeModule()
     {
-        
-        currentModule.execute();
+        if (currentModule.execute() == false)
+        {
+            state = WorkflowSequenceState.ERROR;
+            notifyObservers();
+        }
+        else
+        {
+            validateModuleOutput();
+        }
     }
     
     @Override
     public void validateModuleInput()
     {
         inputState = currentModule.validateInput();
+        state = WorkflowSequenceState.MODULE_INPUT_VALIDATION;
         notifyObservers();
     }
+    
     
     @Override
     public void validateModuleOutput()
     {
         outputState = currentModule.validateOutput();
+        state = WorkflowSequenceState.MODULE_OUTPUT_VALIDATION;
         notifyObservers();
     }
     
@@ -128,12 +140,18 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     public void startSimulation(Simulation simulation)
     {
         view.printSimulationStarted();
+        currentModule.execute();
+        //
+        // for (int i = 0; i < simulation.getNumberOfIterations(); i++)
+        // {
+        // // view.printIteration
+        // for (Module m : modules)
+        // {
+        // m.validateInput();
         
-        for (int i = 0; i < simulation.getNumberOfIterations(); i++)
-        {
-            // view.printIteration }
-            // for()
-        }
+        // }
+        //
+        // }
     }
     
     @Override
@@ -151,18 +169,29 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     }
     
     @Override
-    public void nextModule()
+    public synchronized Module nextModule()
     {
         if (!iterator.hasNext())
         {
+            iteration++;
+            if (iteration >= iterationNumber)
+            {
+                state = WorkflowSequenceState.SIMULATION_SUCCESS;
+            }
+            
+            // view.printNewIteration
+            
             iterator = modules.listIterator(0);
             currentModule = modules.get(0);
         }
         else
         {
-            currentModule = iterator.next();
+            currentModule = modules.get(iterator.nextIndex());
         }
         
+        validateModuleInput();
+        
+        return currentModule;
     }
     
     @Override
