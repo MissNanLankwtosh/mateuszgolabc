@@ -22,7 +22,7 @@ public class DatabaseManagerMock implements DatabaseManager
     private LinkedList<StablePoint> stablePoints;
     private ListIterator<StablePoint> iterator;
     private StablePoint currentStablePoint;
-    
+    private StablePoint initialStablePoint;
     
     public DatabaseManagerMock()
     {
@@ -171,16 +171,15 @@ public class DatabaseManagerMock implements DatabaseManager
     }
     
     @Override
-    public StablePoint getInitialBackup()
+    public StablePoint getInitialStablePoint()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return initialStablePoint;
     }
     
     @Override
-    public void setInitialBackup()
+    public void setInitialStablePoint(StablePoint sp)
     {
-        // TODO Auto-generated method stub
+        initialStablePoint = sp;
         
     }
 }

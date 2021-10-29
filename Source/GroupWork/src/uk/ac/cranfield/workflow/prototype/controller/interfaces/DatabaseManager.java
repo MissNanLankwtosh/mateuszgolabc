@@ -20,7 +20,7 @@ public interface DatabaseManager
     
     public StablePoint getPreviousStablePoint();
     
-    public StablePoint getInitialBackup();
+    public StablePoint getInitialStablePoint();
     
-    public void setInitialBackup();
+    public void setInitialStablePoint(StablePoint sp);
 }

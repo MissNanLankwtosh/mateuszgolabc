@@ -21,4 +21,9 @@ public class WorkflowSequenceView {
 		
 		System.out.println("Error occured in WorkflowSequence! Type: " + errorName + ".");
 	}
+	
+	public void printSimulation(int i) {
+		
+		System.out.println("Simulation " + i + " is started.");
+	}
 }
