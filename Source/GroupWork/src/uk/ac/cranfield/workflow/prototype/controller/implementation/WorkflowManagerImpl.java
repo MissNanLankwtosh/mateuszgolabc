@@ -81,6 +81,12 @@ public class WorkflowManagerImpl implements WorkflowManager
                 case SIMULATION_RECOVERY_RESTART:
                     restart(sequence);
                     break;
+                case SIMULATION_SUCCESS:
+                    sendResult(true);
+                    break;
+                case SIMULATION_FAILURE:
+                    sendResult(false);
+                    break;
             }
         }
     }
@@ -123,10 +129,9 @@ public class WorkflowManagerImpl implements WorkflowManager
     
     
     @Override
-    public void sendResult()
+    public boolean sendResult(boolean result)
     {
-        // TODO Auto-generated method stub
-        
+        return result;
     }
     
     private void recover(WorkflowSequence sequence)
