@@ -18,13 +18,15 @@ public class ModuleMock implements Module
     private Simulation simulation;
     
     
-    public ModuleMock(boolean input, boolean output)
+    public ModuleMock(boolean input, boolean output, int id)
     {
         this.input = (input) ? "correct" : "incorrect";
         this.output = (output) ? "correct" : "incorrect";
         
         inputValidator = new ModuleDataValidatorMock();
         outputValidator = new ModuleDataValidatorMock();
+        
+        this.id = id;
     }
     
     @Override

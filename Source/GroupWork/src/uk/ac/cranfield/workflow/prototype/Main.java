@@ -39,9 +39,9 @@ public class Main
         WorkflowSequenceImpl workflowSequenceImpl = new WorkflowSequenceImpl(workflowManager, workflowSequenceView);
         
         // modules with correct input and output
-        workflowSequenceImpl.addModule(new ModuleMock(true, true));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 3));
         
         workflowManager.startSimulation(workflowSequenceImpl);
     }

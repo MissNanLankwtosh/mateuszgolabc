@@ -112,7 +112,7 @@ public class WorkflowManagerImpl implements WorkflowManager
     private void restart(WorkflowSequence sequence)
     {
         // get stable point
-        StablePoint stablePoint = database.getInitialBackup();
+        StablePoint stablePoint = database.getInitialStablePoint();
         
         // restart using initial stable point
         if (stablePoint != null)

@@ -155,15 +155,20 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     }
     
     @Override
-    public StablePoint createStablePoint()
+    public synchronized StablePoint createStablePoint()
     {
         int prev = -1;
         int next = -1;
         
+        
         if (iterator.hasPrevious())
-            prev = iterator.previous().getID();
+        {
+            prev = modules.get(iterator.previousIndex()).getID();
+        }
         if (iterator.hasNext())
-            next = iterator.next().getID();
+        {
+            next = modules.get(iterator.nextIndex()).getID();
+        }
         
         return new StablePoint(prev, next, "previousOutputFilePath", "nextInputFilePath", iterationNumber);
     }

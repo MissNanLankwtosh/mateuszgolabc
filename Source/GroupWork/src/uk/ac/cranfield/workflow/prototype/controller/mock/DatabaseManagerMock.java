@@ -108,7 +108,8 @@ public class DatabaseManagerMock implements DatabaseManager
     {
         if (stablePoints.size() == numberOfLastBackups)
         {
-            currentStablePoint = iterator.next();
+            if (iterator.hasNext())
+                currentStablePoint = iterator.next();
             stablePoints.removeFirst();
         }
         
