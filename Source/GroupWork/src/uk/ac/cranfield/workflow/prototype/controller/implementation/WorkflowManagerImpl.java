@@ -20,6 +20,7 @@ public class WorkflowManagerImpl implements WorkflowManager
     private final Integer numberOfLastBackups;
     private Integer lastBackupPerformed;
     private Integer backupsPerformed;
+    private Boolean result;
     
     public WorkflowManagerImpl(WorkflowQueue queue, DatabaseManager database, WorkflowManagerView view)
     {
@@ -29,13 +30,14 @@ public class WorkflowManagerImpl implements WorkflowManager
         this.numberOfLastBackups = DEFAULT_NUMBER_OF_LAST_BACKUPS;
         this.lastBackupPerformed = 0;
         this.backupsPerformed = 0;
+        this.result = false;
     }
     
     
     @Override
     public void update(Observable o, Object arg)
     {
-        if (o.equals(arg) && o instanceof WorkflowSequenceImpl)
+        if (o instanceof WorkflowSequence)
         {
             WorkflowSequence sequence = (WorkflowSequenceImpl) o;
             switch (sequence.getState()) {
@@ -82,10 +84,12 @@ public class WorkflowManagerImpl implements WorkflowManager
                     restart(sequence);
                     break;
                 case SIMULATION_SUCCESS:
-                    sendResult(true);
+                    result = true;
+                    sendResult();
                     break;
                 case SIMULATION_FAILURE:
-                    sendResult(false);
+                    result = false;
+                    sendResult();
                     break;
             }
         }
@@ -129,7 +133,7 @@ public class WorkflowManagerImpl implements WorkflowManager
     
     
     @Override
-    public boolean sendResult(boolean result)
+    public boolean sendResult()
     {
         return result;
     }

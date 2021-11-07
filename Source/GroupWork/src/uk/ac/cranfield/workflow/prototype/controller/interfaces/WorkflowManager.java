@@ -9,5 +9,5 @@ public interface WorkflowManager extends Observer
     public void startSimulation(WorkflowSequence sequence);
     
     
-    public boolean sendResult(boolean result);
+    public boolean sendResult();
 }

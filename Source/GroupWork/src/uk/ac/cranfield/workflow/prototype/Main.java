@@ -10,6 +10,7 @@ import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowManager;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowQueue;
 import uk.ac.cranfield.workflow.prototype.controller.mock.DatabaseManagerMock;
 import uk.ac.cranfield.workflow.prototype.model.Simulation;
+import uk.ac.cranfield.workflow.prototype.model.StablePoint;
 import uk.ac.cranfield.workflow.prototype.model.mock.ModuleMock;
 import uk.ac.cranfield.workflow.prototype.view.WorkflowManagerView;
 import uk.ac.cranfield.workflow.prototype.view.WorkflowSequenceView;
@@ -29,6 +30,9 @@ public class Main
         
         // database manager
         DatabaseManager dataBaseManager = new DatabaseManagerMock();
+        dataBaseManager.insertStablePoint(new StablePoint(1, 2, "pathOut", "pathIn", 1));
+        dataBaseManager.insertStablePoint(new StablePoint(2, 3, "pathOut", "pathIn", 2));
+        dataBaseManager.insertStablePoint(new StablePoint(3, 4, "pathOut", "pathIn", 3));
         
         // workflow manager
         WorkflowManagerView workflowManagerView = new WorkflowManagerView();
@@ -38,10 +42,12 @@ public class Main
         WorkflowSequenceView workflowSequenceView = new WorkflowSequenceView();
         WorkflowSequenceImpl workflowSequenceImpl = new WorkflowSequenceImpl(workflowManager, workflowSequenceView);
         
+        
         // modules with correct input and output
         workflowSequenceImpl.addModule(new ModuleMock(true, true, 1));
         workflowSequenceImpl.addModule(new ModuleMock(true, true, 2));
         workflowSequenceImpl.addModule(new ModuleMock(true, true, 3));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 4));
         
         workflowManager.startSimulation(workflowSequenceImpl);
     }
