@@ -115,10 +115,10 @@ public class WorkflowSequenceTest
     public void nextModuleTest()
     {
         WorkflowSequence sequence = new WorkflowSequenceImpl(manager, wfsview);
-        assertEquals(sequence.getNumberOfModules(), 0);
-        
+
         Module module = new ModuleMock(true, false, 1);
         sequence.addModule(module);
+        assertEquals(sequence.getCurrentModule().getID(), module.getID());
         
         Module module2 = new ModuleMock(true, true, 2);
         sequence.addModule(module2);
