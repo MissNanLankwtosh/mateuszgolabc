@@ -2,7 +2,6 @@ package uk.ac.cranfield.workflow.prototype.controller.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Observable;
 
 import uk.ac.cranfield.workflow.prototype.controller.WorkflowSequenceState;
@@ -18,7 +17,6 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
 {
     
     private List<Module> modules;
-    private ListIterator<Module> iterator;
     private Module currentModule;
     private boolean outputState;
     private boolean inputState;
@@ -31,7 +29,6 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     {
         addObserver(observer);
         modules = new ArrayList<Module>();
-        iterator = modules.listIterator();
         iterationNumber = 0;
         iteration = 1;
         this.view = view;
@@ -58,21 +55,26 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     }
     
     @Override
-    public synchronized void removeModule(Module module)
+    public void removeModule(Module module)
     {
         if (currentModule.equals(module))
         {
-            if (!iterator.hasNext())
+            if (modules.indexOf(module) == modules.size() - 1)
             {
-                iterator = modules.listIterator(0);
                 currentModule = modules.get(0);
             }
             else
             {
-                currentModule = modules.get(iterator.nextIndex());
+                // iterator.remove();
+                currentModule = modules.get(modules.indexOf(currentModule) + 1);
+                
             }
         }
+        
+        
         modules.remove(module);
+        
+        
     }
     
     @Override
@@ -146,44 +148,48 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     }
     
     @Override
-    public synchronized StablePoint createStablePoint()
+    public StablePoint createStablePoint()
     {
         int prev = -1;
         int next = -1;
         
+        int index = modules.indexOf(currentModule);
         
-        if (iterator.hasPrevious())
-        {
-            prev = modules.get(iterator.previousIndex()).getID();
-        }
-        if (iterator.hasNext())
-        {
-            next = modules.get(iterator.nextIndex()).getID();
-        }
+        if (index > 0)
+            prev = modules.get(index - 1).getID();
+        
+        if (index < modules.size() - 1)
+            next = modules.get(index + 1).getID();
+        
         
         return new StablePoint(prev, next, "previousOutputFilePath", "nextInputFilePath", iterationNumber);
     }
     
     @Override
-    public synchronized Module nextModule()
+    public Module nextModule()
     {
-        if (!iterator.hasNext())
+        int index = modules.indexOf(currentModule);
+        
+        if (index == modules.size() - 1)
         {
             iteration++;
             if (iteration >= iterationNumber)
             {
                 state = WorkflowSequenceState.SIMULATION_SUCCESS;
+                notifyObserver();
+                
+                return null;
             }
             
             view.printSimulation(iteration);
-            
-            iterator = modules.listIterator(0);
             currentModule = modules.get(0);
         }
         else
         {
-            currentModule = modules.get(iterator.nextIndex());
+            
+            currentModule = modules.get(index + 1);
         }
+        
         
         validateModuleInput();
         

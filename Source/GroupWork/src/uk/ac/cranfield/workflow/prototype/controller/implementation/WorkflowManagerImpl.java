@@ -85,10 +85,12 @@ public class WorkflowManagerImpl implements WorkflowManager
                     break;
                 case SIMULATION_SUCCESS:
                     result = true;
+                    view.printSimulationSuccessfullyFinished();
                     sendResult();
                     break;
                 case SIMULATION_FAILURE:
                     result = false;
+                    view.printSimulationUnsuccessfullyFinished();
                     sendResult();
                     break;
             }

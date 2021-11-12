@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.DatabaseManager;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
@@ -93,7 +94,14 @@ public class DatabaseManagerMock implements DatabaseManager
     @Override
     public StablePoint getLastStablePoint()
     {
-        return stablePoints.getLast(); // catch NoSuchElementException
+        try
+        {
+            return stablePoints.getLast(); // catch NoSuchElementException
+        }
+        catch (NoSuchElementException ex)
+        {
+            return null;
+        }
     }
     
     @Override
