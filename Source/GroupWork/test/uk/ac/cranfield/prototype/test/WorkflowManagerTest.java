@@ -12,6 +12,7 @@ import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowManager;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowQueue;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowSequence;
 import uk.ac.cranfield.workflow.prototype.controller.mock.DatabaseManagerMock;
+import uk.ac.cranfield.workflow.prototype.model.Simulation;
 import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
 import uk.ac.cranfield.workflow.prototype.model.mock.ModuleMock;
 import uk.ac.cranfield.workflow.prototype.view.WorkflowManagerView;
@@ -41,6 +42,9 @@ public class WorkflowManagerTest
     	wfmanager = new WorkflowManagerImpl(queue, dbmanager, wfmview);
        	wfseq = new WorkflowSequenceImpl(wfmanager, wfsview);
        	
+       	Simulation sim = new Simulation(1, null, "File.XML", 2);
+       	queue.push(sim);
+       	
        	Module module = new ModuleMock(true, true, 1);
        //	Module module2 = new ModuleMock(true, true, 2);
        	
@@ -56,6 +60,9 @@ public class WorkflowManagerTest
     {
     	wfmanager = new WorkflowManagerImpl(queue, dbmanager, wfmview);
        	wfseq = new WorkflowSequenceImpl(wfmanager, wfsview);
+       	
+       	Simulation sim = new Simulation(1, null, "File.XML", 2);
+       	queue.push(sim);
        	
        	Module module = new ModuleMock(false, true, 1);
        	wfseq.addModule(module);
