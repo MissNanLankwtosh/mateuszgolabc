@@ -104,7 +104,7 @@ public class WorkflowManagerImpl implements WorkflowManager
         {
             backupsPerformed = 0;
             lastBackupPerformed = 0;
-            database.insertStablePoint(sequence.createStablePoint());
+            database.setInitialStablePoint(sequence.createStablePoint());
             sequence.startSimulation(queue.pop());
         }
         else

@@ -201,9 +201,10 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     {
         for (Module m : modules)
         {
-            if (stablePoint.getId().equals(m.getID()))
+            if (m.getID().equals(stablePoint.getPreModuleID()))
             {
-                m.execute();
+                currentModule = m;
+                validateModuleInput();
                 return;
             }
         }
