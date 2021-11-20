@@ -46,10 +46,10 @@ public class WorkflowManagerTest
        	queue.push(sim);
        	
        	Module module = new ModuleMock(true, true, 1);
-       //	Module module2 = new ModuleMock(true, true, 2);
+        Module module2 = new ModuleMock(true, true, 2);
        	
        	wfseq.addModule(module);
-       //	wfseq.addModule(module2);
+        wfseq.addModule(module2);
        	
        	wfmanager.startSimulation(wfseq);
      	assertTrue(wfmanager.sendResult());
