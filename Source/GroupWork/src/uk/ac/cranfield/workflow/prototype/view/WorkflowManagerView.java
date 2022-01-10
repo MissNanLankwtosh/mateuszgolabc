@@ -34,7 +34,7 @@ public class WorkflowManagerView
     public void printError(String errorName)
     {
         
-        System.out.println("Error occured in WorkflowManager! Type: " + errorName + ".");
+        System.err.println("Error occured in WorkflowManager! Type: " + errorName + ".");
     }
     
     public void printLastModuleExecutionTime(long time)
@@ -64,7 +64,7 @@ public class WorkflowManagerView
     public void printoutWorkflowQueueEmpty()
     {
         
-        System.out.println("Simulation proess failure! Reason: WorkflowQueue is EMPTY.");
+        System.err.println("Simulation proess failure! Reason: WorkflowQueue is EMPTY.");
     }
     
     public void printSimulationSuccessfullyFinished()
@@ -75,7 +75,7 @@ public class WorkflowManagerView
     
     public void printSimulationUnsuccessfullyFinished()
     {
-        System.out.println("Simulation process failed");
+        System.err.println("Simulation process failed");
         
     }
 }

@@ -18,8 +18,7 @@ public class WorkflowSequenceView {
 	}
 	
 	public void printError(String errorName) {
-		
-		System.out.println("Error occured in WorkflowSequence! Type: " + errorName + ".");
+		System.err.println("Error occured in WorkflowSequence! Type: " + errorName + ".");
 	}
 	
 	public void printSimulation(int i) {
