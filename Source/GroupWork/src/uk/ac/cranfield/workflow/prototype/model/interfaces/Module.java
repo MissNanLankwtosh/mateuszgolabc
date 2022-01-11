@@ -6,11 +6,11 @@ import uk.ac.cranfield.workflow.prototype.model.Simulation;
 public interface Module
 {
     
-    public boolean validateInput();
+    public boolean validateInput() throws InterruptedException;
     
-    public boolean validateOutput();
+    public boolean validateOutput() throws InterruptedException;
     
-    public boolean execute();
+    public boolean execute() throws InterruptedException;
     
     public Integer getID();
     

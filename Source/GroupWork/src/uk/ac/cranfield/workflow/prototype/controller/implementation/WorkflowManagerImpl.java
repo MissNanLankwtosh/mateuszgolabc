@@ -13,7 +13,7 @@ import uk.ac.cranfield.workflow.prototype.view.WorkflowManagerView;
 public class WorkflowManagerImpl implements WorkflowManager
 {
     
-    private static int DEFAULT_NUMBER_OF_LAST_BACKUPS = 3;
+    private static int DEFAULT_NUMBER_OF_LAST_BACKUPS = 2;
     private WorkflowQueue queue;
     private DatabaseManager database;
     private WorkflowManagerView view;
@@ -45,8 +45,12 @@ public class WorkflowManagerImpl implements WorkflowManager
                 case MODULE_INPUT_VALIDATION:
                     if (sequence.isInputStateCorrect())
                     {
+                        database.insertStablePoint(sequence.createStablePoint());
+                        
                         view.printInputValidated();
+                        view.printModuleRunning(sequence.getCurrentModule().toString());
                         sequence.executeModule();
+                        
                     }
                     else
                     {
@@ -60,6 +64,16 @@ public class WorkflowManagerImpl implements WorkflowManager
                     if (sequence.isOutputStateCorrect())
                     {
                         view.printOutputValidated();
+                        
+                        
+                        try
+                        {
+                            Thread.sleep(1000);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            view.printError("Workflow sequence error occured");
+                        }
                         view.printModuleFinished(sequence.getCurrentModule().toString());
                         sequence.nextModule();
                     }
@@ -109,7 +123,7 @@ public class WorkflowManagerImpl implements WorkflowManager
         }
         else
         {
-            view.printoutWorkflowQueueEmpty();
+            // view.printoutWorkflowQueueEmpty();
         }
         
     }
@@ -129,7 +143,7 @@ public class WorkflowManagerImpl implements WorkflowManager
         {
             view.printError("Simulation could not be restarted");
             // current simulation failed, starting new simulation
-            startSimulation(sequence);
+            // startSimulation(sequence);
         }
     }
     
@@ -149,15 +163,20 @@ public class WorkflowManagerImpl implements WorkflowManager
             stablePoint = database.getLastStablePoint();
             lastBackupPerformed++;
         }
-        else
+        else if (backupsPerformed < numberOfLastBackups)
         {
             stablePoint = database.getPreviousStablePoint();
             backupsPerformed++;
+        }
+        else
+        {
+            view.printSimulationUnsuccessfullyFinished();
         }
         
         // recover using stable point
         if (stablePoint != null)
         {
+            view.printSimulationRecovered();
             sequence.recoverFromStablePoint(stablePoint);
             
         }
@@ -168,5 +187,7 @@ public class WorkflowManagerImpl implements WorkflowManager
             // current simulation failed, starting new simulation
             startSimulation(sequence);
         }
+        
+        
     }
 }

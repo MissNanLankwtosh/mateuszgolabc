@@ -43,12 +43,12 @@ public class WorkflowSequenceTest
         WorkflowSequence sequence = new WorkflowSequenceImpl(manager, wfsview);
         assertEquals(sequence.getNumberOfModules(), 0);
         
-        Module module = new ModuleMock(true, false, 2);
+        Module module = new ModuleMock(true, false, 2, "m2");
         sequence.addModule(module);
         assertEquals(sequence.getCurrentModule().getID(), module.getID());
         assertEquals(sequence.getNumberOfModules(), 1);
         
-        Module module2 = new ModuleMock(true, true, 1);
+        Module module2 = new ModuleMock(true, true, 1, "m1");
         sequence.addModule(module2);
         assertEquals(sequence.getNumberOfModules(), 2);
     }
@@ -58,8 +58,8 @@ public class WorkflowSequenceTest
     {
         WorkflowSequence sequence = new WorkflowSequenceImpl(manager, wfsview);
         
-        Module module = new ModuleMock(true, false, 1);
-        Module module2 = new ModuleMock(true, true, 2);
+        Module module = new ModuleMock(true, false, 1, "m1");
+        Module module2 = new ModuleMock(true, true, 2, "m2");
         sequence.addModule(module);
         assertEquals(sequence.getNumberOfModules(), 1);
         
@@ -75,7 +75,7 @@ public class WorkflowSequenceTest
     {
         WorkflowSequence sequence = new WorkflowSequenceImpl(manager, wfsview);
         
-        sequence.addModule(new ModuleMock(true, true, 1));
+        sequence.addModule(new ModuleMock(true, true, 1, "m1"));
         
         sequence.validateModuleInput();
         assertTrue(sequence.isInputStateCorrect());
@@ -90,7 +90,7 @@ public class WorkflowSequenceTest
     {
         WorkflowSequence sequence = new WorkflowSequenceImpl(manager, wfsview);
         
-        sequence.addModule(new ModuleMock(false, true, 1));
+        sequence.addModule(new ModuleMock(false, true, 1, "m1"));
         
         sequence.validateModuleInput();
         assertFalse(sequence.isInputStateCorrect());
@@ -101,7 +101,7 @@ public class WorkflowSequenceTest
     {
         WorkflowSequence sequence = new WorkflowSequenceImpl(manager, wfsview);
         
-        sequence.addModule(new ModuleMock(true, false, 1));
+        sequence.addModule(new ModuleMock(true, false, 1, "m1"));
         
         sequence.validateModuleInput();
         assertTrue(sequence.isInputStateCorrect());
@@ -115,12 +115,12 @@ public class WorkflowSequenceTest
     public void nextModuleTest()
     {
         WorkflowSequence sequence = new WorkflowSequenceImpl(manager, wfsview);
-
-        Module module = new ModuleMock(true, false, 1);
+        
+        Module module = new ModuleMock(true, false, 1, "m1");
         sequence.addModule(module);
         assertEquals(sequence.getCurrentModule().getID(), module.getID());
         
-        Module module2 = new ModuleMock(true, true, 2);
+        Module module2 = new ModuleMock(true, true, 2, "m2");
         sequence.addModule(module2);
         sequence.nextModule();
         assertEquals(sequence.getCurrentModule().getID(), module2.getID());

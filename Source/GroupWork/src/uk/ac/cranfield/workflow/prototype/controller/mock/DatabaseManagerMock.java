@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.DatabaseManager;
 import uk.ac.cranfield.workflow.prototype.model.StablePoint;
+import uk.ac.cranfield.workflow.prototype.view.DatabaseManagerView;
 
 /*
  * DatabaseManager class
@@ -24,11 +25,13 @@ public class DatabaseManagerMock implements DatabaseManager
     private ListIterator<StablePoint> iterator;
     private StablePoint currentStablePoint;
     private StablePoint initialStablePoint;
+    private DatabaseManagerView view;
     
     public DatabaseManagerMock()
     {
         stablePoints = new LinkedList<StablePoint>();
         iterator = stablePoints.listIterator();
+        view = new DatabaseManagerView();
     }
     
     /*
@@ -69,17 +72,6 @@ public class DatabaseManagerMock implements DatabaseManager
         }
     }
     
-    public void disConnect()
-    {
-        try
-        {
-            c.close();
-        }
-        catch (SQLException err)
-        {
-            System.out.println(err.getMessage());
-        }
-    }
     
     public void insert(StablePoint sp)
     {
@@ -96,6 +88,17 @@ public class DatabaseManagerMock implements DatabaseManager
     {
         try
         {
+            
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            view.printGettingLastStablePoint();
             return stablePoints.getLast(); // catch NoSuchElementException
         }
         catch (NoSuchElementException ex)
@@ -163,13 +166,19 @@ public class DatabaseManagerMock implements DatabaseManager
     @Override
     public StablePoint getPreviousStablePoint()
     {
-        if (!iterator.hasPrevious())
+        stablePoints.pop();
+        currentStablePoint = stablePoints.peekLast();
+        
+        
+        view.printGettingPreviousStablePoint();
+        try
         {
-            currentStablePoint = null;
+            Thread.sleep(1000);
         }
-        else
+        catch (InterruptedException e)
         {
-            currentStablePoint = iterator.previous();
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         return currentStablePoint;
     }
@@ -177,7 +186,14 @@ public class DatabaseManagerMock implements DatabaseManager
     @Override
     public void disconnect()
     {
-        // TODO Auto-generated method stub
+        try
+        {
+            c.close();
+        }
+        catch (SQLException err)
+        {
+            System.out.println(err.getMessage());
+        }
         
     }
     

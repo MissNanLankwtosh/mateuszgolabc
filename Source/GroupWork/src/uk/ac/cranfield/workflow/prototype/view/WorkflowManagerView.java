@@ -64,7 +64,7 @@ public class WorkflowManagerView
     public void printoutWorkflowQueueEmpty()
     {
         
-        System.err.println("Simulation proess failure! Reason: WorkflowQueue is EMPTY.");
+        System.err.println("Simulation process failure! Reason: WorkflowQueue is EMPTY.");
     }
     
     public void printSimulationSuccessfullyFinished()

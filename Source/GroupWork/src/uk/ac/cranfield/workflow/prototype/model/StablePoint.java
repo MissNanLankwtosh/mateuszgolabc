@@ -9,8 +9,7 @@ public class StablePoint
 {
     
     private Integer id;
-    private int preModuleID;
-    private int postModuleID;
+    private Integer moduleID;
     private String prevModuleOutputPath;
     private String nextModuleInputPath;
     private Integer iterationNumber;
@@ -23,10 +22,9 @@ public class StablePoint
      * StablePoint(0, 1, outputPath, inputPath);
      */
     
-    public StablePoint(int pre, int post, String pathToOutput, String pathToInput, int iterationNumber)
+    public StablePoint(Integer moduleId, String pathToOutput, String pathToInput, int iterationNumber)
     {
-        this.preModuleID = pre;
-        this.postModuleID = post;
+        this.moduleID = moduleId;
         this.prevModuleOutputPath = pathToOutput;
         this.nextModuleInputPath = pathToInput;
     }
@@ -34,18 +32,6 @@ public class StablePoint
     public void setId(int id)
     {
         this.id = id;
-    }
-    
-    public int getPreModuleID()
-    {
-        
-        return preModuleID;
-    }
-    
-    public int getPostModuleID()
-    {
-        
-        return postModuleID;
     }
     
     
@@ -79,6 +65,15 @@ public class StablePoint
     public final String getNextModuleInputPath()
     {
         return nextModuleInputPath;
+    }
+    
+    
+    /**
+     * @return the moduleID
+     */
+    public final Integer getModuleID()
+    {
+        return moduleID;
     }
     
     

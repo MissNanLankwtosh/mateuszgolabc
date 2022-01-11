@@ -16,34 +16,68 @@ public class ModuleMock implements Module
     private String output;
     private String input;
     private Simulation simulation;
+    private Boolean autofix;
+    private String name;
     
     
-    public ModuleMock(boolean input, boolean output, int id)
+    public ModuleMock(boolean input, boolean output, int id, String name, boolean autofix)
     {
         this.input = (input) ? "correct" : "incorrect";
         this.output = (output) ? "correct" : "incorrect";
+        this.autofix = autofix;
         
         inputValidator = new ModuleDataValidatorMock();
         outputValidator = new ModuleDataValidatorMock();
         
         this.id = id;
+        this.name = name;
+    }
+    
+    public ModuleMock(boolean input, boolean output, int id, String name)
+    {
+        this.input = (input) ? "correct" : "incorrect";
+        this.output = (output) ? "correct" : "incorrect";
+        this.autofix = false;
+        
+        inputValidator = new ModuleDataValidatorMock();
+        outputValidator = new ModuleDataValidatorMock();
+        
+        this.id = id;
+        this.name = name;
     }
     
     @Override
-    public boolean validateInput()
+    public boolean validateInput() throws InterruptedException
     {
-        return inputValidator.validate(input);
+        try
+        {
+            return inputValidator.validate(input);
+        }
+        finally
+        {
+            if (autofix)
+                input = "correct";
+        }
     }
     
     @Override
-    public boolean validateOutput()
+    public boolean validateOutput() throws InterruptedException
     {
-        return outputValidator.validate(output);
+        try
+        {
+            return outputValidator.validate(output);
+        }
+        finally
+        {
+            if (autofix)
+                output = "correct";
+        }
     }
     
     @Override
-    public boolean execute()
+    public boolean execute() throws InterruptedException
     {
+        Thread.sleep(2000);
         return true;
     }
     
@@ -56,7 +90,7 @@ public class ModuleMock implements Module
     @Override
     public String toString()
     {
-        return id.toString();
+        return name;
     }
     
     @Override

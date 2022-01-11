@@ -10,8 +10,6 @@ import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowManager;
 import uk.ac.cranfield.workflow.prototype.controller.interfaces.WorkflowQueue;
 import uk.ac.cranfield.workflow.prototype.controller.mock.DatabaseManagerMock;
 import uk.ac.cranfield.workflow.prototype.model.Simulation;
-import uk.ac.cranfield.workflow.prototype.model.StablePoint;
-import uk.ac.cranfield.workflow.prototype.model.interfaces.Module;
 import uk.ac.cranfield.workflow.prototype.model.mock.ModuleMock;
 import uk.ac.cranfield.workflow.prototype.view.WorkflowManagerView;
 import uk.ac.cranfield.workflow.prototype.view.WorkflowSequenceView;
@@ -31,9 +29,6 @@ public class Main
         
         // database manager
         DatabaseManager dataBaseManager = new DatabaseManagerMock();
-        dataBaseManager.insertStablePoint(new StablePoint(1, 2, "pathOut", "pathIn", 1));
-        dataBaseManager.insertStablePoint(new StablePoint(2, 3, "pathOut", "pathIn", 2));
-        dataBaseManager.insertStablePoint(new StablePoint(3, 4, "pathOut", "pathIn", 3));
         
         // workflow manager
         WorkflowManagerView workflowManagerView = new WorkflowManagerView();
@@ -45,10 +40,9 @@ public class Main
         
         
         // modules with correct input and output
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 3));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 4));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "m1"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "m2"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 3, "m3"));
         
         workflowManager.startSimulation(workflowSequenceImpl);
     }
@@ -62,36 +56,65 @@ public class Main
         
         // database manager
         DatabaseManager dataBaseManager = new DatabaseManagerMock();
-        dataBaseManager.insertStablePoint(new StablePoint(1, 2, "pathOut", "pathIn", 1));
         
         
         // workflow manager
         WorkflowManagerView workflowManagerView = new WorkflowManagerView();
         WorkflowManager workflowManager = new WorkflowManagerImpl(queue, dataBaseManager, workflowManagerView);
         
+        // workflow sequence
+        WorkflowSequenceView workflowSequenceView = new WorkflowSequenceView();
+        WorkflowSequenceImpl workflowSequenceImpl = new WorkflowSequenceImpl(workflowManager, workflowSequenceView);
+        
+        
+        // modules with correct input and output
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "m1"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "m2"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, false, 3, "m3", true));
+        
+        workflowManager.startSimulation(workflowSequenceImpl);
+        
+        
+    }
+    
+    
+    public static void failure()
+    {
+        
+        Simulation simulation = new Simulation(1, Arrays.asList(parameterFiles), "simulation.xml", 5);
+        
+        WorkflowQueue queue = new WorkflowQueueImpl();
+        queue.push(simulation);
+        
+        // database manager
+        DatabaseManager dataBaseManager = new DatabaseManagerMock();
+        
+        
+        // workflow manager
+        WorkflowManagerView workflowManagerView = new WorkflowManagerView();
+        WorkflowManager workflowManager = new WorkflowManagerImpl(queue, dataBaseManager, workflowManagerView);
         
         // workflow sequence
         WorkflowSequenceView workflowSequenceView = new WorkflowSequenceView();
         WorkflowSequenceImpl workflowSequenceImpl = new WorkflowSequenceImpl(workflowManager, workflowSequenceView);
         
         
-        Module module = new ModuleMock(false, true, 1);
-        workflowSequenceImpl.addModule(module);
+        // modules with correct input and output
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "m1"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "m2"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, false, 3, "m3"));
+        
         
         workflowManager.startSimulation(workflowSequenceImpl);
         
-    }
-    
-    
-    public static void recoveryFailed()
-    {
         
     }
     
     public static void main(String[] args)
     {
-        success();
+        // success();
         // recoverySucceeded();
+        failure();
         
     }
 }

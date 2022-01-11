@@ -80,21 +80,37 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     @Override
     public void executeModule()
     {
-        if (currentModule.execute() == false)
+        try
+        {
+            if (currentModule.execute() == false)
+            {
+                state = WorkflowSequenceState.ERROR;
+                notifyObserver();
+            }
+            else
+            {
+                validateModuleOutput();
+            }
+        }
+        catch (InterruptedException e)
         {
             state = WorkflowSequenceState.ERROR;
             notifyObserver();
-        }
-        else
-        {
-            validateModuleOutput();
         }
     }
     
     @Override
     public void validateModuleInput()
     {
-        inputState = currentModule.validateInput();
+        try
+        {
+            inputState = currentModule.validateInput();
+        }
+        catch (InterruptedException e)
+        {
+            state = WorkflowSequenceState.ERROR;
+            notifyObserver();
+        }
         state = WorkflowSequenceState.MODULE_INPUT_VALIDATION;
         
         notifyObserver();
@@ -104,7 +120,15 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     @Override
     public void validateModuleOutput()
     {
-        outputState = currentModule.validateOutput();
+        try
+        {
+            outputState = currentModule.validateOutput();
+        }
+        catch (InterruptedException e)
+        {
+            state = WorkflowSequenceState.ERROR;
+            notifyObserver();
+        }
         state = WorkflowSequenceState.MODULE_OUTPUT_VALIDATION;
         notifyObserver();
     }
@@ -150,25 +174,14 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     @Override
     public StablePoint createStablePoint()
     {
-        int prev = -1;
-        int next = -1;
-        
-        int index = modules.indexOf(currentModule);
-        
-        if (index > 0)
-            prev = modules.get(index - 1).getID();
-        
-        if (index < modules.size() - 1)
-            next = modules.get(index + 1).getID();
-        
-        
-        return new StablePoint(prev, next, "previousOutputFilePath", "nextInputFilePath", iterationNumber);
+        return new StablePoint(currentModule.getID(), "previousOutputFilePath", "nextInputFilePath", iterationNumber);
     }
     
     @Override
     public Module nextModule()
     {
         int index = modules.indexOf(currentModule);
+        
         
         if (index == modules.size() - 1)
         {
@@ -183,10 +196,11 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
             
             view.printSimulation(iteration);
             currentModule = modules.get(0);
+            
+            
         }
         else
         {
-            
             currentModule = modules.get(index + 1);
         }
         
@@ -201,8 +215,9 @@ public class WorkflowSequenceImpl extends Observable implements WorkflowSequence
     {
         for (Module m : modules)
         {
-            if (m.getID().equals(stablePoint.getPreModuleID()))
+            if (m.getID().equals(stablePoint.getModuleID()))
             {
+                
                 currentModule = m;
                 validateModuleInput();
                 return;

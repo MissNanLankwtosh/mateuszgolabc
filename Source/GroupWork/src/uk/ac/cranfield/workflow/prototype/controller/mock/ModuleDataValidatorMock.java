@@ -7,8 +7,9 @@ public class ModuleDataValidatorMock implements ModuleDataValidator
 {
     
     @Override
-    public boolean validate(String xmlPath)
+    public boolean validate(String xmlPath) throws InterruptedException
     {
+        Thread.sleep(1000);
         if ("correct".compareToIgnoreCase(xmlPath) == 0)
             return true;
         
