@@ -68,7 +68,7 @@ public class WorkflowManagerImpl implements WorkflowManager
                         
                         try
                         {
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
                         }
                         catch (InterruptedException e)
                         {

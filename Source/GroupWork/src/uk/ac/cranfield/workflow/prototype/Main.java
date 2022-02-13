@@ -40,9 +40,9 @@ public class Main
         
         
         // modules with correct input and output
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "m1"));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "m2"));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 3, "m3"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "M1"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "M2"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 3, "M3"));
         
         workflowManager.startSimulation(workflowSequenceImpl);
     }
@@ -68,9 +68,9 @@ public class Main
         
         
         // modules with correct input and output
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "m1"));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "m2"));
-        workflowSequenceImpl.addModule(new ModuleMock(true, false, 3, "m3", true));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "M1"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "M2"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, false, 3, "M3", true));
         
         workflowManager.startSimulation(workflowSequenceImpl);
         
@@ -100,9 +100,9 @@ public class Main
         
         
         // modules with correct input and output
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "m1"));
-        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "m2"));
-        workflowSequenceImpl.addModule(new ModuleMock(true, false, 3, "m3"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 1, "M1"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, true, 2, "M2"));
+        workflowSequenceImpl.addModule(new ModuleMock(true, false, 3, "M3"));
         
         
         workflowManager.startSimulation(workflowSequenceImpl);
@@ -112,9 +112,18 @@ public class Main
     
     public static void main(String[] args)
     {
-        // success();
-        // recoverySucceeded();
-        failure();
-        
+        try {
+        	System.out.println("=============EXECUTION SUCCESFULL=============");
+        	success();
+			Thread.sleep(3000);
+			System.out.println("\n\n=======EXECUTION FAILURE, RECOVERY OK=========");
+			recoverySucceeded();
+			Thread.sleep(3000);
+			System.out.println("\n\n=====EXECUTION FAILURE, RECOVERY FAILURE======");
+		    failure();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

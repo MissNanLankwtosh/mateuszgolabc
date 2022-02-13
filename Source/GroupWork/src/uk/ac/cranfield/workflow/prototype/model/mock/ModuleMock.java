@@ -77,7 +77,7 @@ public class ModuleMock implements Module
     @Override
     public boolean execute() throws InterruptedException
     {
-        Thread.sleep(2000);
+        Thread.sleep(500);
         return true;
     }
     
